@@ -1,0 +1,7 @@
+env/
+trains/
+*.npy
+__pycache__/
+*.pyc
+pet_disease_images/
+pet_disease_images_augmented/
