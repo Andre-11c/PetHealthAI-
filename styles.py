@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 
-def boxplot_style(fig, n_cols, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5, ticklabels=True):
+def boxplot_style(fig, n_cols, height=600, width=1000, gridcolor='lightgrey', gridwidth=0.5, ticklabels=True):
 
     fig.update_layout(
         height=height,
@@ -25,7 +25,7 @@ def boxplot_style(fig, n_cols, height=500, width=1000, gridcolor='lightgrey', gr
     return fig
 
 
-def heatmap_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5):
+def heatmap_style(fig, height=600, width=1000, gridcolor='lightgrey', gridwidth=0.5):
     fig.update_layout(
         height=height,
         width=width,
@@ -41,7 +41,7 @@ def heatmap_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=
     return fig
 
 
-def bar_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5):
+def bar_style(fig, height=600, width=1000, gridcolor='lightgrey', gridwidth=0.5):
     fig.update_layout(
         height=height,
         width=width,
@@ -57,7 +57,7 @@ def bar_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5)
     return fig
 
 
-def pie_style(fig, height=500, width=1000):
+def pie_style(fig, height=600, width=1000):
     fig.update_layout(
         height=height,
         width=width,
@@ -70,7 +70,7 @@ def pie_style(fig, height=500, width=1000):
     return fig
 
 
-def scatter_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5):
+def scatter_style(fig, height=600, width=1000, gridcolor='lightgrey', gridwidth=0.5):
     fig.update_layout(
         height=height,
         width=width,
@@ -86,7 +86,7 @@ def scatter_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=
     return fig
 
 
-def stacked_bar_style(fig, height=500, width=1000, gridcolor='lightgrey', gridwidth=0.5):
+def stacked_bar_style(fig, height=600, width=1000, gridcolor='lightgrey', gridwidth=0.5):
     fig.update_layout(
         height=height,
         width=width,
