@@ -14,7 +14,6 @@
 
     <div class="modal-body">
       <form id="predictionForm">
-        <!-- Symptoms Selection -->
         <div class="symptoms-section">
           <h3>Síntomas Observados</h3>
           <p class="section-subtitle">Selecciona los síntomas principales</p>
@@ -142,7 +141,6 @@
           </div>
         </div>
 
-        <!-- Optional Image Upload -->
         <div class="optional-image-section">
           <div class="section-header">
             <h3>¿Deseas agregar una foto? (Opcional)</h3>
@@ -173,7 +171,6 @@
           </div>
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="predict-btn" id="predictBtn" disabled>
           <span class="btn-text">Analizar</span>
           <span class="btn-loader" style="display: none;">
@@ -182,7 +179,6 @@
         </button>
       </form>
 
-      <!-- Results Area -->
       <div class="results-area" id="resultsArea" style="display: none;">
         <div class="result-icon">
           <i class="ri-heart-pulse-line"></i>
@@ -619,7 +615,6 @@
     transform: translateY(-2px);
   }
 
-  /* Scrollbar personalizado */
   .modal-content::-webkit-scrollbar {
     width: 8px;
   }
@@ -641,7 +636,6 @@
 <script>
   const API_URL = 'http://localhost:5000';
 
-  // Mapeo de síntomas en español a inglés (como están en el CSV)
   const symptomMapping: Record<string, string> = {
     "Fever": "Fever",
     "Lethargy": "Lethargy",
@@ -660,7 +654,6 @@
     "Swelling": "Swelling"
   };
 
-  // Mensajes personalizados por enfermedad
 const diseaseMessages: Record<string, string> = {
     "Dental Disease": "Tu mascota podría tener problemas dentales. Te recomendamos una revisión dental para mantener su salud bucal. Con el cuidado adecuado, su sonrisa volverá a brillar.",
     "Distemper": "Se detectaron síntomas compatibles con moquillo. Es importante actuar rápido, pero con el tratamiento veterinario adecuado, muchas mascotas se recuperan completamente. Estás haciendo lo correcto al buscar ayuda.",
@@ -679,25 +672,21 @@ const diseaseMessages: Record<string, string> = {
     "Tick Infestation": "Se detectó infestación de garrapatas. Es fácil de resolver con productos antiparasitarios adecuados. Tu mascota estará libre de estas molestas visitas en poco tiempo.",
     "Urinary Tract Infection": "Posible infección urinaria detectada. Con antibióticos, tu gato se sentirá mejor rápidamente. Es una condición común y muy tratable. Pronto volverá a la normalidad.",
     "Worm Infection": "Tu mascota tiene parásitos intestinales. No te preocupes, es súper común y se soluciona fácilmente con desparasitantes. En días notarás la mejoría.",
-    // Enfermedades tabulares
     "Respiratory Infection": "Se detectó una infección respiratoria. Con el tratamiento adecuado, tu mascota se recuperará pronto. Mantén un ambiente cálido y consulta a tu veterinario.",
     "Gastroenteritis": "Los síntomas indican gastroenteritis. Es tratable con hidratación y dieta adecuada. Tu veterinario puede recetar medicamentos para aliviar el malestar.",
     "Parasitic Infection": "Tu mascota tiene una infección parasitaria. Con el desparasitante correcto, se resolverá rápidamente. Es muy común y completamente tratable.",
     "Arthritis": "Se detectaron signos de artritis. Aunque es crónica, hay muchos tratamientos para mantener a tu mascota cómoda y activa. Con el manejo adecuado, tendrá buena calidad de vida."
 };
 
-  // Normalizar nombres de enfermedades
   function normalizeDiseaseName(disease: string): string {
     return disease.replace(/ in (Cat|Dog)$/i, '').trim();
   }
 
-  // Obtener mensaje personalizado
   function getDiseaseMessage(disease: string): string {
     const normalized = normalizeDiseaseName(disease);
     return diseaseMessages[normalized] || "Hemos detectado una posible condición en tu mascota. Te recomendamos consultar con tu veterinario para un diagnóstico preciso y tratamiento adecuado. ¡Estás haciendo lo correcto! 💚";
   }
 
-  // Elementos del DOM
   const modal = document.getElementById('predictionModal');
   const closeModalBtn = document.getElementById('closeModal');
   const uploadArea = document.getElementById('uploadArea');
@@ -713,25 +702,20 @@ const diseaseMessages: Record<string, string> = {
   const toggleImageBtn = document.getElementById('toggleImageBtn');
   const symptomCheckboxes = document.querySelectorAll('input[name="symptom"]');
 
-  // Validar formulario
   function validateForm() {
     const selectedSymptoms = Array.from(symptomCheckboxes).filter((cb: any) => cb.checked);
     const hasImage = imageInput?.files && imageInput.files.length > 0;
-    // Habilitar si hay síntomas o imagen
     predictBtn.disabled = selectedSymptoms.length === 0 && !hasImage;
   }
 
-  // Escuchar cambios en checkboxes
   symptomCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', validateForm);
   });
 
-  // Abrir modal
   document.querySelector('.header__btn button')?.addEventListener('click', () => {
     modal?.classList.add('active');
   });
 
-  // Cerrar modal
   closeModalBtn?.addEventListener('click', () => {
     modal?.classList.remove('active');
     resetForm();
@@ -744,7 +728,6 @@ const diseaseMessages: Record<string, string> = {
     }
   });
 
-  // Toggle imagen opcional
   toggleImageBtn?.addEventListener('click', () => {
     if (uploadArea!.style.display === 'none') {
       uploadArea!.style.display = 'block';
@@ -756,7 +739,6 @@ const diseaseMessages: Record<string, string> = {
     }
   });
 
-  // Upload de imagen
   uploadArea?.addEventListener('click', (e) => {
     if (uploadArea.style.display !== 'none') {
       imageInput?.click();
@@ -812,7 +794,7 @@ const diseaseMessages: Record<string, string> = {
         previewImg.src = e.target.result as string;
         uploadPlaceholder!.style.display = 'none';
         imagePreview!.style.display = 'block';
-        validateForm(); // Revalidar cuando se agrega imagen
+        validateForm();
       }
     };
     reader.readAsDataURL(file);
@@ -823,7 +805,7 @@ const diseaseMessages: Record<string, string> = {
     if (previewImg) previewImg.src = '';
     uploadPlaceholder!.style.display = 'block';
     imagePreview!.style.display = 'none';
-    validateForm(); // Revalidar cuando se quita imagen
+    validateForm();
   }
 
   function resetForm() {
@@ -833,7 +815,6 @@ const diseaseMessages: Record<string, string> = {
     uploadArea!.style.display = 'none';
     toggleImageBtn!.innerHTML = '<i class="ri-image-add-line"></i><span>Agregar Imagen</span>';
     
-    // Desmarcar todos los checkboxes
     symptomCheckboxes.forEach((cb: any) => {
       cb.checked = false;
     });
@@ -841,26 +822,21 @@ const diseaseMessages: Record<string, string> = {
     predictBtn.disabled = true;
   }
 
-  // Submit del formulario
   predictionForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Obtener síntomas seleccionados
     const selectedSymptoms = Array.from(symptomCheckboxes)
       .filter((cb: any) => cb.checked)
       .map((cb: any) => cb.value);
 
-    // Verificar si hay imagen
     const hasImage = imageInput?.files && imageInput.files.length > 0;
     const hasSymptoms = selectedSymptoms.length > 0;
 
-    // Debe tener al menos síntomas o imagen
     if (!hasSymptoms && !hasImage) {
       alert('Por favor selecciona al menos un síntoma o agrega una imagen');
       return;
     }
 
-    // Preparar síntomas para el backend (los primeros 4, rellenar con "No" si faltan)
     const symptomsForBackend: string[] = [];
     for (let i = 0; i < 4; i++) {
       if (i < selectedSymptoms.length) {
@@ -870,7 +846,6 @@ const diseaseMessages: Record<string, string> = {
       }
     }
 
-    // Crear datos tabulares con valores codificados binarios
     const tabularData = {
       symptom_1: symptomsForBackend[0],
       symptom_2: symptomsForBackend[1],
@@ -907,12 +882,10 @@ const diseaseMessages: Record<string, string> = {
     try {
       const formData = new FormData();
       
-      // Agregar imagen si existe (independiente de síntomas)
-      if (hasImage) {
+      if (hasImage && imageInput.files) {
         formData.append('image', imageInput.files[0]);
       }
       
-      // Agregar datos tabulares solo si hay síntomas seleccionados
       if (hasSymptoms) {
         formData.append('tabular_data', JSON.stringify(tabularData));
       }
@@ -939,7 +912,8 @@ const diseaseMessages: Record<string, string> = {
 
     } catch (error) {
       console.error('Error completo:', error);
-      alert(`Hubo un error al analizar: ${error.message || 'Por favor intenta de nuevo.'}`);
+      const errorMessage = error instanceof Error ? error.message : 'Por favor intenta de nuevo.';
+      alert(`Hubo un error al analizar: ${errorMessage}`);
       predictBtn.disabled = false;
       (btnText as HTMLElement).style.display = 'block';
       (btnLoader as HTMLElement).style.display = 'none';
@@ -958,7 +932,6 @@ const diseaseMessages: Record<string, string> = {
     document.getElementById('confidenceText')!.textContent = `${confidence}% de confianza`;
     document.getElementById('resultMessage')!.innerHTML = `<p>${getDiseaseMessage(data.top_prediction)}</p>`;
 
-    // Animar barra de confianza
     setTimeout(() => {
       const confidenceFill = document.getElementById('confidenceFill');
       if (confidenceFill) {
@@ -967,7 +940,6 @@ const diseaseMessages: Record<string, string> = {
     }, 100);
   }
 
-  // Nueva consulta
   newAnalysisBtn?.addEventListener('click', () => {
     resetForm();
     const btnText = predictBtn.querySelector('.btn-text');
